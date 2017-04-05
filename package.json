@@ -1,0 +1,23 @@
+{
+  "name": "redis-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "answer.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/globals.js test/language.test.js test/test-level.test.js test/evaluation.test.js test/test.test.js test/question.test.js test/answer.test.js test/test-result.test.js test/successful-candidate.test.js test/translation-test.test.js test/translation-test-result.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ioredis": "^2.5.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "should": "^11.2.1"
+  }
+}

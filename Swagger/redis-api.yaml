@@ -1,0 +1,1082 @@
+swagger: '2.0'
+info:
+  title: First Draft
+  version: "1.0.0"
+# the domain of the service
+host: firstdraft.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+  
+paths:
+  /language/:
+    post:
+      operationId: language.create
+      summary: Add a new Language object
+      tags:
+        - Language
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Language"      
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Language'
+        400:
+          description: Language already exists
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+            
+    get:
+      summary: Get Language objects
+      operationId: language.read
+      tags:
+        - Language
+      parameters:
+        - name: id
+          in: query
+          required: false
+          type: integer      
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Language'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: Update a Language object
+      operationId: language.update
+      description: ToDo
+      tags:
+        - Language
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+        - in: query
+          name: name
+          required: false
+          type: string
+        - in: query
+          name: description
+          required: false
+          type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Language'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'    
+
+    delete:
+      summary: Delete a Language object
+      operationId: language.delete
+      tags:
+        - Language
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        409:
+          description: Conflict, language in use
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /test-level/:
+    post:
+      operationId: testLevel.create
+      summary: Create a new Test Level
+      tags:
+        - Test Level
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/TestLevel"      
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/TestLevel"      
+        409:
+          description: Conflict, Test Level name already exists
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+            
+    get:
+      operationId: testLevel.get
+      summary: Get a specific Test Level object
+      tags:
+        - Test Level
+      parameters:
+        - name: test-level-id
+          in: query
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/TestLevel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      operationId: testLevel.update
+      summary: Update a Test Level object
+      tags:
+        - Test Level
+      parameters:
+        - name: test-level-id
+          in: query
+          type: integer
+          required: true
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/TestLevel"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/TestLevel'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/Error'    
+
+    delete:
+      operationId: testLevel.delete
+      summary: Delete a Test Level
+      description: ToDo
+      tags:
+        - Test Level
+      parameters:
+        - name: test-level-id
+          in: query
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        409:
+          description: Conflict, Test Level in use
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /test/:
+    post:
+      operationId: test.create
+      summary: Create a new test
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Test"      
+      tags:
+        - Test
+      responses:
+        200:
+          description: A new test created
+          schema:
+            $ref: "#/definitions/Test"      
+        412:
+          description: Precondition Failed
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+            
+    get:
+      operationId: test.get
+      summary: Get all Test objects or a single Test object
+      tags:
+        - Test
+      parameters:
+        - name: id
+          in: query
+          required: false
+          type: integer      
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/Test'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    
+    put:
+      operationId: test.update
+      summary: Update a test
+      tags:
+        - Test
+      parameters:
+        - in: query
+          name: id
+          required: true
+          type: integer      
+        - in: query
+          name: created
+          required: true
+          type: integer      
+        - in: query
+          name: authorId
+          required: true
+          type: integer      
+        - in: query
+          name: testLevelId
+          required: true
+          type: integer      
+        - in: query
+          name: sourceId
+          required: true
+          type: integer      
+        - in: query
+          name: targetId
+          required: true
+          type: integer      
+        - in: query
+          name: minCorrect
+          required: true
+          type: integer      
+        - in: query
+          name: maxRetries
+          required: true
+          type: integer      
+        - in: query
+          name: description
+          required: true
+          type: integer      
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Test'
+        404:
+          description: Not Found
+        412:
+          description: Precondition Failed
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'    
+            
+    delete:
+      operationId: test.delete
+      summary: Delete a Test object
+      tags:
+        - Test
+      parameters:
+        - in: query
+          name: id
+          required: true
+          type: integer      
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        409:
+          description: Conflict, Test in use
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+ 
+  /test/conduct/:
+    get:
+      operationId: testCandidate.get
+      summary: Get a specific Question object
+      tags:
+        - Conduct Test
+      parameters:
+        - name: testId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/TestQuestions'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /question/:
+    post:
+      operationId: question.create
+      summary: Create a new Question object
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Question"      
+      tags:
+        - Question
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Question'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      operationId: question.get
+      summary: Get a specific Question object
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/Question'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+    put:
+      operationId: question.update
+      summary: Update a question
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+        - name: testId
+          in: query
+          required: false
+          type: integer
+        - in: query
+          name: position
+          required: false
+          type: integer
+        - name: source
+          in: query
+          required: false
+          type: string
+      tags:
+        - Question
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Question'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'    
+            
+    delete:
+      operationId: question.delete
+      summary: Delete a language.
+      description: ToDo
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      tags:
+        - Question
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'    
+
+  /answer/:
+    post:
+      operationId: answer.create
+      summary: Create a new Answer
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/Answer"      
+      tags:
+        - Answer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Answer'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      operationId: answer.get
+      summary: Get all the answers for a given Test & Question
+      parameters:
+        - name: id
+          in: query
+          required: false
+          type: integer
+      tags:
+        - Answer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Answer'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      operationId: answer.update
+      summary: Update an Answer object
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+        - name: questionId
+          in: query
+          required: false
+          type: integer      
+        - in: query
+          name: postion
+          required: false
+          type: integer
+        - in: query
+          name: isCorrect
+          required: false
+          type: boolean
+        - in: query
+          name: target
+          required: false
+          type: string
+      tags:
+        - Answer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Answer'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      operationId: deleteAnswer
+      summary: Delete an Answer
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      tags:
+        - Answer
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /evaluation/:
+    post:
+      operationId: evaluation.create
+      summary: Create an Evaluation
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Evaluation" 
+      tags:
+        - Evaluation
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Evaluation'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+  
+    get:
+      operationId: evaluation.get
+      summary: Get Evaluation object(s)
+      parameters:
+        - name: id
+          in: query
+          required: false
+          type: integer
+      tags:
+        - Evaluation
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Evaluation'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+
+    put:
+      operationId: evaluation.update
+      summary: Update an Evaluation
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+        - name: created
+          in: query
+          required: false
+          type: integer
+        - name: tester-id
+          in: query
+          required: false
+          type: integer
+        - name: testee-id
+          in: query
+          required: false
+          type: integer
+        - name: source-id
+          in: query
+          required: false
+          type: integer
+        - name: target-id
+          in: query
+          required: false
+          type: integer
+        - name: ranking
+          in: query
+          required: false
+          type: integer
+        - name: comment
+          in: query
+          required: false
+          type: string
+      tags:
+        - Evaluation
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Evaluation'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+          
+    delete:
+      operationId: evaluation.delete
+      summary: Delete an Evaluation
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      tags:
+        - Evaluation
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+
+  /successful-candidate/:
+    get:
+      operationId: successfulCandidate.get
+      summary: Get All Successful Candidates With List of (Source / Target)
+      tags:
+        - Successful Candidate
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/SuccessfulCandidates'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /translator/source/target/evaluation/:
+    get:
+      operationId: getEvaluationsByTranslatorBySourceByTarget
+      summary: Get all evaluations for a specific Translator / Source / Target
+      parameters:
+        - name: translaterId
+          in: query
+          required: true
+          type: integer
+        - name: sourceId
+          in: query
+          required: true
+          type: integer
+        - name: targetId
+          in: query
+          required: true
+          type: integer      
+      tags:
+        - Evaluation
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Evaluation'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /test-plan/:
+    post:
+      summary: Create a new Test Plan
+      operationId: testPlan.create
+      tags:
+        - Test Plan
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/TestPlan"  
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/TestPlan'
+        400:
+          description: Already exits
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+    get:
+      summary: Get a Test Plan
+      operationId: testPlan.get
+      tags:
+        - Test Plan
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/TestPlan'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+    put:
+      summary: Create a new Test Plan
+      operationId: testPlan.update
+      tags:
+        - Test Plan
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+        - name: levels
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/TestPlan'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+    delete:
+      summary: Delete a Test Plan
+      operationId: testPlan.delete
+      tags:
+        - Test Plan
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /test-plan/complete/:
+    get:
+      summary: Get all tests that are available to the testee
+      operationId: testPlan.complete
+      tags:
+        - Test Plan
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AvailableTests'
+        404:
+          description: Not Found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /test-result/:
+    post:
+      summary: Get all tests that are available to the testee
+      operationId: testResult.create
+      tags:
+        - Test
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CandidateAnswers" 
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+
+  AvailableTests:
+    type: array
+    items:
+      $ref: '#/definitions/Test'
+
+  Answer:
+    type: object
+    properties:
+      id:
+        type: integer
+      parentId:
+        type: integer
+        description: questionId
+      isCorrect:
+        type: boolean
+      target:
+        type: string
+
+  QuestionWithAnswer:
+    type: object
+    properties:
+      questionId:
+        type: integer
+      answerId: 
+        type: integer
+        
+  QuestionWithAnswers:
+    type: array
+    items:
+      $ref: '#/definitions/QuestionWithAnswer'
+      
+  Error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+
+  Evaluation:
+    type: object
+    properties:
+      id:
+        type: integer
+      created:
+        type: integer
+        format: dateTime
+      tester-id:
+        type: integer
+        description: User id providing the evaluation
+      testee-id:
+        type: integer
+        description: User id of the user being evaluated
+      source-id:
+        type: integer
+        description: Source language id
+      target-id:
+        type: integer
+        description: Target language id
+      ranking:
+        type: integer
+        description: Evaluation ranking (0 min, 100 max)
+      comment:
+        type: string
+
+  Language:
+    type: object
+    properties:
+      languageId:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+
+  Question:
+    type: object
+    properties:
+      id:
+        type: integer
+      parendtId:
+        type: integer
+        description: testId
+      source:
+        type: string
+        description: Text to be translated
+
+  SourceTarget:
+    type: object
+    properties:
+      sourceId:
+        type: integer
+      targetId:
+        type: integer
+        
+  SuccessfulCandidate:
+    type: object
+    properties:
+      testeeId:
+        type: integer
+      sourcetarget:
+        type: array
+        items:
+          $ref: '#/definitions/SourceTarget'
+
+  SuccessfulCandidates:
+    type: object
+    properties:
+      successfulcandidates:
+        type: array
+        items:
+          $ref: '#/definitions/SuccessfulCandidate'
+        
+  Test:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Record Id
+      created:
+        type: integer
+        format: dateTime
+      authorId:
+        type: integer
+        description: Id of the user that created the test.
+      testLevelId:
+        type: integer
+        description: Test level number (1 min, 10 max)
+      sourceId:
+        type: integer
+        description: Id of the user being evaluated
+      targetId:
+        type: integer
+        description: Source language id
+      minCorrect:
+        type: integer
+        description: Minimum correct in order to pass
+      maxRetries:
+        type: integer
+        description: Max times that a user can retry this test
+      description:
+        type: string
+        
+  CandidateAnswers:
+    description: Used to deliver candidate's test answers
+    type: object
+    properties:
+      testeeId:
+        type: integer
+      testId:
+        type: integer
+      answers:
+        type: array
+        items:
+          $ref: '#/definitions/QuestionWithAnswers'
+
+  TestAnswer:
+    description: A pairing of an Answer Id and and Target text
+    type: object
+    properties:
+      answerId: 
+        type: integer
+      target:
+        type: string
+        
+  TestQuestionAnswers:
+    description: All the answers to a specific question
+    type: object
+    properties:
+      questionId: 
+        type: integer
+      answers:
+        type: array
+        items:
+          $ref: '#/definitions/TestAnswer'
+          
+  TestQuestions:
+    description: Used to deliver candidate's test answers
+    type: object
+    properties:
+      testId: 
+        type: integer
+      questionAnswers:
+        type: array
+        items:
+          $ref: '#/definitions/TestQuestionAnswers'
+
+  TestLevel:
+    type: object
+    properties:
+      id:
+        type: integer
+      level:
+        type: integer
+        minimum: 1
+      name:
+        type: string
+        description: Display name
+      description:
+        type: string
+
+  TestPlan:
+    type: object
+    properties:
+      id:
+        type: integer
+      source-id:
+        type: integer
+      target-id:
+        type: integer
+      levels:
+        type: integer
+        description: The number of levels to the test for the specified Source / Target translation test
+
