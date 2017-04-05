@@ -1,4 +1,4 @@
-# Redis API Concept
+# API Concept (Implemented via NodeJS and Redis)
 The following discussion presents the overall API concept, starting from the more fundamental endpoints, and then advancing through to the more complex.  Redis is the database platform.
 
 ## Purpose
